@@ -1,18 +1,8 @@
 #!/usr/bin/env bash
 
-for stream in {{ . }}
+for stream in {{ .name }}
   do mkdir -p /mnt/hls/$stream && cd /mnt/hls/$stream
-     ffmpeg -i http://fex:Cssq8gEC@m.brg.ua:8080/$stream -c:a aac -b:a 64k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-64.m3u8 2> $stream-64.log  &
-     ffmpeg -i http://fex:Cssq8gEC@m.brg.ua:8080/$stream -c:a aac -b:a 128k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-128.m3u8 2> $stream-128.log &
-     ffmpeg -i http://fex:Cssq8gEC@m.brg.ua:8080/$stream -c:a aac -b:a 320k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-320.m3u8 2> $stream-320.log &
+     ffmpeg -i {{ .inputStream }} -c:a aac -b:a {{ .low }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .low }}.m3u8 2> $stream-{{ .low }}.log  &
+     ffmpeg -i {{ .inputStream}} -c:a aac -b:a {{ .middle }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .middle }}.m3u8 2> $stream-{{ .middle }}.log &
+     ffmpeg -i {{ .inputStream }} -c:a aac -b:a {{ .high }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .high }}.m3u8 2> $stream-{{ .high }}.log &
 done
-
-<ul>
-    {{range .Todos}}
-        {{if .Done}}
-            <li class="done">{{.Title}}</li>
-        {{else}}
-            <li>{{.Title}}</li>
-        {{end}}
-    {{end}}
-</ul>
