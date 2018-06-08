@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-for stream in {{ .name }}
-  do mkdir -p /mnt/hls/$stream && cd /mnt/hls/$stream
-     ffmpeg -i {{ .inputStream }} -c:a aac -b:a {{ .low }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .low }}.m3u8 2> $stream-{{ .low }}.log  &
-     ffmpeg -i {{ .inputStream}} -c:a aac -b:a {{ .middle }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .middle }}.m3u8 2> $stream-{{ .middle }}.log &
-     ffmpeg -i {{ .inputStream }} -c:a aac -b:a {{ .high }}k -strict -2 -f hls -segment_list_size 10 -hls_time 3 -hls_flags delete_segments $stream-{{ .high }}.m3u8 2> $stream-{{ .high }}.log &
-done
