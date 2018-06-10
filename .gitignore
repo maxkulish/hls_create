@@ -2,3 +2,5 @@
 play/
 scripts/
 reloader.sh
+stations.json
+config.json
