@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"log"
 	"os"
-	"path/filepath"
 
 	"github.com/spf13/viper"
 
@@ -109,11 +108,11 @@ func createHLSPlaylist(plst HLSPlaylist) {
 }
 
 // creates reloader.sh
-func createReloader(stations []Station, reloaderPath string) {
+func createReloader(stations []Station, scriptsFolder, reloaderPath string) {
 
 	type ReloaderSettings struct {
 		Stations     string
-		ProjDir      string
+		ScriptsPath  string
 		ReloaderPath string
 	}
 
@@ -132,11 +131,9 @@ func createReloader(stations []Station, reloaderPath string) {
 		log.Printf("[+] Creating folder: %s\n", reloaderPath)
 	}
 
-	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-
 	reloader := ReloaderSettings{
 		Stations:     parsedStations,
-		ProjDir:      dir,
+		ScriptsPath:  scriptsFolder,
 		ReloaderPath: reloaderPath,
 	}
 
@@ -206,7 +203,7 @@ func main() {
 	}
 
 	// Create reloader.sh scripts
-	createReloader(stations, reloaderPath)
+	createReloader(stations, scriptsFolder, reloaderPath)
 
 	for _, st := range stations {
 

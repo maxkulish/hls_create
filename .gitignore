@@ -1,1 +1,4 @@
 .idea/
+play/
+scripts/
+reloader.sh

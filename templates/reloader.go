@@ -3,14 +3,14 @@ package templates
 // ReloaderScript - bash script which monitor ffmpeg processes and reload them
 const ReloaderScript = `#!/usr/bin/env bash
 
-WORKDIR={{ .ProjDir }}
+SCRIPTS_DIR={{ .ScriptsPath }}
 
 timestamp() {
   date +"%Y-%m-%d %H:%M"
 }
 
 
-for stream in {{ .Stations }}
+for stream in{{ .Stations }}
 
 do numStr=` + "`ps aux | grep $stream | grep -v grep | awk '{print $2}' | wc -l`" +
 	`	echo "$(timestamp): $stream - $numStr"
@@ -18,7 +18,7 @@ do numStr=` + "`ps aux | grep $stream | grep -v grep | awk '{print $2}' | wc -l`
 	then
 		kill $(ps aux | grep $stream | grep -v grep | awk '{print $2}')
 		echo -e "=> Reloading $stream ..."
-		cd $WORKDIR && sh $stream.sh
+		cd $SCRIPTS_DIR && sh $stream.sh
 	fi
 done
 
