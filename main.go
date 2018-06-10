@@ -66,12 +66,17 @@ func createStationScript(plst HLSPlaylist) {
 
 	t := template.Must(template.New("bash").Parse(templates.BashTemplate))
 
-	f, err := os.Create(fmt.Sprintf("%s/%s.sh", plst.RunScript, plst.Name))
+	fileName := fmt.Sprintf("%s/%s.sh", plst.RunScript, plst.Name)
+	f, err := os.Create(fileName)
 	defer f.Close()
 
 	if err != nil {
 		log.Printf("[!] Can't create file: %v", err)
 		os.Exit(1)
+	}
+
+	if err := os.Chmod(fileName, 0644); err != nil {
+		log.Printf("[!] Can't chmod file: %v", err)
 	}
 
 	err = t.Execute(f, plst)
@@ -139,12 +144,17 @@ func createReloader(stations []Station, scriptsFolder, reloaderPath string) {
 
 	t := template.Must(template.New("reloader").Parse(templates.ReloaderScript))
 
-	f, err := os.Create(fmt.Sprintf("%s/reloader.sh", reloaderPath))
+	fileName := fmt.Sprintf("%s/reloader.sh", reloaderPath)
+	f, err := os.Create(fileName)
 	defer f.Close()
 
 	if err != nil {
 		log.Printf("[!] Can't create file: %v", err)
 		os.Exit(1)
+	}
+
+	if err := os.Chmod(fileName, 0644); err != nil {
+		log.Printf("[!] Can't chmod file: %v", err)
 	}
 
 	err = t.Execute(f, reloader)
