@@ -1,0 +1,7 @@
+{
+    "scripts_folder" : "./scripts",
+    "playlist_folder": "./play",
+    "ffmpeg_folder": "./hls",
+    "ext_path": "http://207.154.240.221/hls",
+    "reloader_path": "."
+}

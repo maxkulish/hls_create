@@ -1,15 +1,16 @@
 package templates
 
+// ReloaderScript - bash script which monitor ffmpeg processes and reload them
 const ReloaderScript = `#!/usr/bin/env bash
 
-WORKDIR=/home/fon/scripts
+WORKDIR={{ .ProjDir }}
 
 timestamp() {
   date +"%Y-%m-%d %H:%M"
 }
 
 
-for stream in business djfm powerfm renessans radioparadise shanson eurojazz jamfm loungefm
+for stream in {{ .Stations }}
 
 do numStr=` + "`ps aux | grep $stream | grep -v grep | awk '{print $2}' | wc -l`" +
 	`	echo "$(timestamp): $stream - $numStr"
