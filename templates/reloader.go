@@ -12,8 +12,8 @@ timestamp() {
 
 for stream in{{ .Stations }}
 
-do numStr=` + "`ps aux | grep $stream | grep -v grep | awk '{print $2}' | wc -l`" +
-	`	echo "$(timestamp): $stream - $numStr"
+do numStr=` + "`ps aux | grep $stream | grep -v grep | awk '{print $2}' | wc -l`" + `
+	echo "$(timestamp): $stream - $numStr"
 	if [ $numStr -ne 3 ]
 	then
 		kill $(ps aux | grep $stream | grep -v grep | awk '{print $2}')

@@ -153,7 +153,7 @@ func createReloader(stations []Station, scriptsFolder, reloaderPath string) {
 		os.Exit(1)
 	}
 
-	if err := os.Chmod(fileName, 0644); err != nil {
+	if err := os.Chmod(fileName, 0755); err != nil {
 		log.Printf("[!] Can't chmod file: %v", err)
 	}
 
